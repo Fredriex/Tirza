@@ -56,6 +56,11 @@
                     <input type="number" name="hargaTreatment" class="form-control" id="hargaTreatment" value="{{$gettreatment->hargaTreatment}}" required>
                 </div>
 
+                <div class="mb-3">
+                    <label for="hargaTreatment" class="form-label">HPP:</label>
+                    <input type="number" name="hpp" class="form-control" id="hargaTreatment" value="{{$gettreatment->hpp}}" required>
+                </div>
+
                 <!-- Buttons -->
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary me-2" name="simpan" value="simpan">

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,6 +64,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
         <div class="container">
@@ -90,11 +92,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/dataTransaksi">Data Transaksi</a>
                     </li>
+
+                    <div class="dropdown">
+                        <a class="btn btn-warning dropdown-toggle"  data-bs-toggle="dropdown" >
+                            Keuangan
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/pemasukan">Pemasukan</a></li>
+                            <li><a class="dropdown-item" href="/pengeluaran">pengeluaran</a></li>
+                        </ul>
+                    </div>
                 </ul>
                 @if(isset($user))
-                    <div class="user-info d-flex align-items-center">
-                        <p class="mb-0"><strong>{{ $user->name }}</strong> ({{ $user->role }})</p>
-                    </div>
+                <div class="user-info d-flex align-items-center">
+                    <p class="mb-0"><strong>{{ $user->name }}</strong> ({{ $user->role }})</p>
+                </div>
                 @endif
                 <form action="/logout" method="POST" class="d-inline ms-3">
                     @csrf
@@ -111,4 +123,5 @@
         <p class="lead">Nikmati layanan terbaik kami untuk perawatan kecantikan Anda.</p>
     </div>
 </body>
+
 </html>

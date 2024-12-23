@@ -74,6 +74,10 @@
                     <label for="hargaTreatment" class="form-label">Harga Treatment</label>
                     <input type="number" name="hargaTreatment" class="form-control" id="hargaTreatment" placeholder="Masukkan Harga Treatment">
                 </div>
+                <div class="mb-3">
+                    <label for="hargaTreatment" class="form-label">HPP</label>
+                    <input type="number" name="hpp" class="form-control" id="hargaTreatment" placeholder="Masukkan HPP">
+                </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary text-white">Simpan</button>
                 </div>

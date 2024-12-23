@@ -53,6 +53,7 @@
                     <th scope="col">ID Treatment</th>
                     <th scope="col">Nama Treatment</th>
                     <th scope="col">Harga Treatment</th>
+                    <th scope="col">HPP</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -62,6 +63,7 @@
                     <td>{{ $data->idTreatment }}</td>
                     <td>{{ $data->namaTreatment }}</td>
                     <td>Rp. {{ number_format($data->hargaTreatment, 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($data->hpp, 0, ',', '.') }}</td>
                     <td>
                         <button onclick="detail('{{ $data->idTreatment }}')" class="btn btn-primary btn-sm">
                             <i class="bi bi-pencil"></i> Edit

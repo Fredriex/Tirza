@@ -41,6 +41,10 @@ Route::middleware(['auth', RoleMiddleware::class])->group(function () {
     Route::get('/gaji/{idKaryawan}', [Controller::class, 'gaji'])->name('gaji');
     //pdf
     Route::get('/slipgaji/{idKaryawan}', [Controller::class, 'slipgaji'])->name('slipgaji');
+    //keuangan
+    Route::get('/pemasukan', [Controller::class, 'pemasukan'])->name('pemasukan');
+    Route::get('/pengeluaran', [Controller::class, 'pengeluaran'])->name('pengeluaran');
+
 });
 
 // Rute untuk transaksi (dapat diakses oleh admin dan karyawan)

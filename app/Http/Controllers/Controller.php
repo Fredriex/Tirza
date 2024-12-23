@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -8,138 +9,151 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Models\Karyawan;
 use App\Models\Treatment;
 use App\Models\Transaksi;
-use App\Models\detailTransaksi;
+use App\Models\DetailTransaksi;
 use App\Models\Komisi;
 use App\Models\Gaji;
 use App\Models\Pdf;
-use DateTime;
+use App\Models\Pemasukan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Support\Facades\Auth;
 
-
-class Controller extends BaseController{
-    
+class Controller extends BaseController
+{
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function home(){
-        $user = Auth::user(); // Mendapatkan data user yang sedang login
-        return view('home', compact('user')); // Mengirim data user ke view
+    // Home
+    public function home()
+    {
+        $user = Auth::user();
+        return view('home', compact('user'));
     }
 
-//treatment~
-    public function treatment(){
-        $x = new Treatment();
-        $hasil = $x->bacaTreatment();
-        return view('treatment', ["treatment"=>$hasil]);
+    // Treatment
+    public function treatment()
+    {
+        $treatments = (new Treatment())->bacaTreatment();
+        return view('treatment', ['treatment' => $treatments]);
     }
 
-    public function addtreatment(){
+    public function addtreatment()
+    {
         return view('addtreatment');
     }
 
-    public function savetreatment(Request $xx){
-        $x = new Treatment();
-        $x ->simpanTreatment($xx);
-        $hasil = $x->bacaTreatment();
-        return view('treatment', ["treatment"=>$hasil]);
+    public function savetreatment(Request $request)
+    {
+        $treatment = new Treatment();
+        $treatment->simpanTreatment($request);
+        return redirect()->route('treatment');
     }
 
-    public function edittreatment($idTreatment){
-        $x = new Treatment();
-        $hasil = $x -> gettreatment($idTreatment);
-        return view('edittreatment', ["gettreatment" => $hasil]);
+    public function edittreatment($idTreatment)
+    {
+        $treatment = (new Treatment())->gettreatment($idTreatment);
+        return view('edittreatment', ['gettreatment' => $treatment]);
     }
 
-    
-    public function changetreatment(Request $xx){
-        $x =  new Treatment();
-        if(isset($xx->simpan)){
-            $x->edittreatment($xx);
+    public function changetreatment(Request $request)
+    {
+        $treatment = new Treatment();
+
+        if (isset($request->simpan)) {
+            $treatment->edittreatment($request);
         }
 
-        if(isset($xx->hapus)){
-            $x->deletetreatment($xx->idTreatment);
+        if (isset($request->hapus)) {
+            $treatment->deletetreatment($request->idTreatment);
         }
 
-        $hasil = $x->bacaTreatment();
-        return view ('treatment',["treatment"=>$hasil]);
+        return redirect()->route('treatment');
     }
 
-// karyawan
-    public function karyawan(){
-        $x = new Karyawan();
-        $hasil = $x->bacaKaryawankomisi();
-        return view('karyawan', ["karyawan" => $hasil]);
+    // Karyawan
+    public function karyawan()
+    {
+        $karyawans = (new Karyawan())->bacaKaryawankomisi();
+        return view('karyawan', ['karyawan' => $karyawans]);
     }
 
-    public function addkaryawan(){
+    public function addkaryawan()
+    {
         return view('addkaryawan');
     }
 
-    public function savekaryawan(Request $xx){
-        $x = new Karyawan();
-        $x ->simpankaryawan($xx);
-        $hasil = $x->bacaKaryawankomisi();
-        return view('karyawan', ["karyawan"=>$hasil]);
+    public function savekaryawan(Request $request)
+    {
+        $karyawan = new Karyawan();
+        $karyawan->simpankaryawan($request);
+        return redirect()->route('karyawan');
     }
 
-    public function editkaryawan($idKaryawan){
-        $x = new Karyawan();
-        $hasil = $x -> getkaryawan($idKaryawan);
-        return view('editkaryawan', ["getkaryawan" => $hasil]);
+    public function editkaryawan($idKaryawan)
+    {
+        $karyawan = (new Karyawan())->getkaryawan($idKaryawan);
+        return view('editkaryawan', ['getkaryawan' => $karyawan]);
     }
 
-    
-    public function changekaryawan(Request $xx){
-        $x =  new Karyawan();
-        if(isset($xx->simpan)){
-            $x->editkaryawan($xx);
+    public function changekaryawan(Request $request)
+    {
+        $karyawan = new Karyawan();
+
+        if (isset($request->simpan)) {
+            $karyawan->editkaryawan($request);
         }
 
-        if(isset($xx->hapus)){
-            $x->deletekaryawan($xx->idKaryawan);
+        if (isset($request->hapus)) {
+            $karyawan->deletekaryawan($request->idKaryawan);
         }
 
-        $hasil = $x->bacaKaryawankomisi();
-        return view ('karyawan',["karyawan"=>$hasil]);
+        return redirect()->route('karyawan');
     }
 
+    // Transaksi
+    public function transaksi()
+    {
+        $treatments = (new Treatment())->bacaTreatment();
+        $treatmentOptions = DB::table('treatment')->select('idTreatment', 'namaTreatment', 'hargaTreatment')->get();
+        $karyawans = (new Karyawan())->bacaKaryawan();
 
-//transaksi
-    public function transaksi(){
-        $x = new Treatment();
-        $y = new Karyawan();
-        $treatment = $x -> bacaTreatment();
-        $treatment2 = DB::table('treatment')->select('idTreatment', 'namaTreatment', 'hargaTreatment')->get();
-        $karyawan = $y -> bacaKaryawan();
-        return view('transaksi', ["treatment" => $treatment,"treatment2" => $treatment2, "karyawan" => $karyawan]);
+        return view('transaksi', [
+            'treatment' => $treatments,
+            'treatment2' => $treatmentOptions,
+            'karyawan' => $karyawans
+        ]);
     }
 
-
-    public function savetransaksi(Request $request) {
+    public function savetransaksi(Request $request)
+    {
         $idTransaksi = $request->input('idTransaksi');
         $tanggal = $request->input('tanggal');
         $namaCustomer = $request->input('namaCustomer');
         $total = $request->input('total');
-    
+
         DB::table('transaksi')->insert([
             'idTransaksi' => $idTransaksi,
             'tanggal' => $tanggal,
             'namaCustomer' => $namaCustomer,
             'total' => $total
         ]);
-    
+
+        DB::table('pemasukan')->insert([
+            'idTransaksi' => $idTransaksi,
+            'tanggal' => $tanggal,
+            'namaCustomer' => $namaCustomer,
+            'total' => $total
+        ]);
+
         $idTreatmentList = $request->input('idTreatment');
         $idKaryawanList = $request->input('idKaryawan');
         $qtyList = $request->input('qty');
         $subtotalList = $request->input('subtotal');
-    
+
         for ($i = 0; $i < count($idTreatmentList); $i++) {
             $subtotal = $subtotalList[$i];
             $komisi = $subtotal * 0.1;
-            $tanggal = $tanggal;
+
             DB::table('detailtransaksi')->insert([
                 'idTransaksi' => $idTransaksi,
                 'idTreatment' => $idTreatmentList[$i],
@@ -147,6 +161,7 @@ class Controller extends BaseController{
                 'qty' => $qtyList[$i],
                 'subtotal' => $subtotal
             ]);
+
             DB::table('detailgaji')->insert([
                 'idTransaksi' => $idTransaksi,
                 'idTreatment' => $idTreatmentList[$i],
@@ -154,6 +169,7 @@ class Controller extends BaseController{
                 'qty' => $qtyList[$i],
                 'subtotal' => $subtotal
             ]);
+
             DB::table('komisi')->insert([
                 'idTransaksi' => $idTransaksi,
                 'idKaryawan' => $idKaryawanList[$i],
@@ -161,67 +177,101 @@ class Controller extends BaseController{
                 'tanggal' => $tanggal
             ]);
         }
-        return redirect('/dataTransaksi'); 
-    }
-    
-    
-    public function dataTransaksi(){
-        
-        $x = new Transaksi();
-        $hasil = $x -> bacatransaksi();
-        return view('datatransaksi', ["dataTR" => $hasil]);
+
+        return redirect('/dataTransaksi');
     }
 
-        
-    public function detail($idTransaksi){
-        $x = new detailTransaksi();
-        $hasil = $x -> detail($idTransaksi); 
-        $hasil2 = $x-> grandtot($idTransaksi);
-        $hasil3 = $x-> detailCustomer($idTransaksi);
-        return view('detailtransaksi',["detail" => $hasil, "grandtot" => $hasil2, "customer" => $hasil3]);
+    public function dataTransaksi()
+    {
+        $transaksis = (new Transaksi())->bacatransaksi();
+        return view('datatransaksi', ['dataTR' => $transaksis]);
     }
 
-    public function komisi(){
-        $x = new Komisi();
-        $hasil = $x->bacakomisi();
-        return view('komisi', ["gaji" => $hasil]);
+    public function detail($idTransaksi)
+    {
+        $detail = (new DetailTransaksi())->detail($idTransaksi);
+        $grandTotal = (new DetailTransaksi())->grandtot($idTransaksi);
+        $customer = (new DetailTransaksi())->detailCustomer($idTransaksi);
+
+        return view('detailtransaksi', [
+            'detail' => $detail,
+            'grandtot' => $grandTotal,
+            'customer' => $customer
+        ]);
     }
 
-    public function komisikaryawan($idKaryawan){
-        $x = new Komisi();
-        $hasil = $x->hitungkomisi($idKaryawan);
-        return view('penggajian', ["komisi" => $hasil]);
+    // Komisi
+    public function komisi()
+    {
+        $komisis = (new Komisi())->bacakomisi();
+        return view('komisi', ['gaji' => $komisis]);
     }
 
-    public function resetkomisi(){
-        $x = new Karyawan();
-        $x -> resetkomisi();
-        $hasil = $x->bacaKaryawankomisi();
-        return view('karyawan', ["karyawan" => $hasil]);
+    public function komisikaryawan($idKaryawan)
+    {
+        $komisi = (new Komisi())->hitungkomisi($idKaryawan);
+        return view('penggajian', ['komisi' => $komisi]);
     }
 
-    public function gaji($idKaryawan){
-        $x = new Gaji();
-        $hasil = $x->detailKaryawan($idKaryawan);
-        $hasil2 = $x->detailgaji($idKaryawan);
-        $hasil3 = $x->totalgaji($idKaryawan);
-        return view ('gaji', ["gaji" => $hasil, "gajikomisi" => $hasil2, "totalgaji" => $hasil3]);
+    public function resetkomisi()
+    {
+        (new Karyawan())->resetkomisi();
+        return redirect()->route('karyawan');
     }
 
-    public function pdf($idTransaksi){
-        $x = new Pdf();
-        $hasil = $x->detailPdf($idTransaksi);
-        $hasil2 = $x->grandtotPdf($idTransaksi);
-        $hasil3 = $x->detailCustomerPdf($idTransaksi);
-        return view('pdf',["detail" => $hasil, "grandtot" => $hasil2, "customer" => $hasil3]);
+    // Gaji
+    public function gaji($idKaryawan)
+    {
+        $karyawanDetail = (new Gaji())->detailKaryawan($idKaryawan);
+        $gajiDetail = (new Gaji())->detailgaji($idKaryawan);
+        $totalGaji = (new Gaji())->totalgaji($idKaryawan);
+
+        return view('gaji', [
+            'gaji' => $karyawanDetail,
+            'gajikomisi' => $gajiDetail,
+            'totalgaji' => $totalGaji
+        ]);
     }
 
-    public function slipgaji($idKaryawan){
-        $x = new Pdf();
-        $hasil = $x->detailKaryawanPdf($idKaryawan);
-        $hasil2 = $x->detailgajiPdf($idKaryawan);
-        $hasil3 = $x->totalgajiPdf($idKaryawan);
-        return view('slipgaji', ["karyawan" => $hasil, "detailGaji" =>$hasil2, "totalGaji" => $hasil3]);
+    // PDF
+    public function pdf($idTransaksi)
+    {
+        $details = (new Pdf())->detailPdf($idTransaksi);
+        $grandTotal = (new Pdf())->grandtotPdf($idTransaksi);
+        $customer = (new Pdf())->detailCustomerPdf($idTransaksi);
+
+        return view('pdf', [
+            'detail' => $details,
+            'grandtot' => $grandTotal,
+            'customer' => $customer
+        ]);
     }
+
+    public function slipgaji($idKaryawan)
+    {
+        $karyawan = (new Pdf())->detailKaryawanPdf($idKaryawan);
+        $gajiDetails = (new Pdf())->detailgajiPdf($idKaryawan);
+        $totalGaji = (new Pdf())->totalgajiPdf($idKaryawan);
+
+        return view('slipgaji', [
+            'karyawan' => $karyawan,
+            'detailGaji' => $gajiDetails,
+            'totalGaji' => $totalGaji
+        ]);
+    }
+
+    public function pemasukan()
+    {
+        $x = new Pemasukan();
+        $pemasukan = $x->pemasukan();
+        $totalpemasukan = $x->totalpemasukan();
+        return view('pemasukan', ["pemasukan" => $pemasukan , "totalpemasukan" => $totalpemasukan]);
+    }
+
+    public function pengeluaran()
+    {
+        return view('pengeluaran');
+    }
+
 
 }

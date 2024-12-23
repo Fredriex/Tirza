@@ -14,7 +14,8 @@ Class Treatment{
         DB::table('treatment')->insert([
             'idTreatment' => $x -> idTreatment,
             'namaTreatment' => $x -> namaTreatment,
-            'hargaTreatment' => $x -> hargaTreatment
+            'hargaTreatment' => $x -> hargaTreatment,
+            'hpp' => $x -> hpp
         ]);
     }
 
@@ -26,7 +27,8 @@ Class Treatment{
     public function edittreatment($idTreatment){
         DB::table('treatment')->where('idTreatment','=',$idTreatment->idTreatment)->update([
             'namaTreatment' => $idTreatment -> namaTreatment,
-            'hargaTreatment' => $idTreatment -> hargaTreatment
+            'hargaTreatment' => $idTreatment -> hargaTreatment,
+            'hpp' => $idTreatment -> hpp
         ]);
     }
 
