@@ -107,16 +107,27 @@
         <!-- Grand Total -->
         <table class="table">
             <tr>
+                <td class="total-row" colspan="3">Metode</td>
+                <td class="total-row">{{$grandtot->metode}}</td>
+            </tr>
+            <tr>
                 <td class="total-row" colspan="3">Grand Total</td>
                 <td class="total-row">{{ number_format($grandtot->total, 2, ',', '.') }}</td>
             </tr>
+            <tr>
+                <td class="total-row" colspan="3">Bayar</td>
+                <td class="total-row">{{ number_format($grandtot->bayar, 2, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td class="total-row" colspan="3">Kembali</td>
+                <td class="total-row">{{ number_format($grandtot->kembali, 2, ',', '.') }}</td>
+            </tr>
         </table>
-
+        <br>
         <!-- Footer -->
         <footer>
             <div class="footer">
                 Terimakaih Telah Melakukan Treatment Di Tirza Salon!<br>
-                {{ config('app.name') }} - {{ \Carbon\Carbon::now()->year }}
             </div>
         </footer>
     </div>

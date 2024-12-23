@@ -3,66 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaksi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Form Transaksi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
         }
-        .navbar-brand {
-            font-weight: bold;
-        }
         .card {
             border-radius: 10px;
-        }
-        .treatment-row {
-            margin-bottom: 15px;
         }
         .row-total {
             font-weight: bold;
             color: #0d6efd;
         }
         .btn-danger {
-            margin-top: 28px;
+            margin-top: 30px;
         }
         .btn-success {
             margin-top: 10px;
+        }
+        .form-control:invalid {
+            border-color: red;
         }
     </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-warning">
-  <div class="container">
-    <a class="navbar-brand" href="#">Tirza Salon</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/treatment">Data Treatment</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/karyawan">Data Karyawan</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/komisi">Komisi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/dataTransaksi">Data Transaksi</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<x-navbar active="transaksi" />
 
-<!-- Main Content -->
+
 <div class="container mt-5">
     <div class="card shadow">
         <div class="card-header bg-dark text-white text-center">
@@ -86,8 +56,8 @@
 
                 <!-- Nama Customer -->
                 <div class="mb-3">
-                    <label for="customer" class="form-label">Nama Customer:</label>
-                    <input type="text" name="namaCustomer" class="form-control" placeholder="Masukkan Nama Customer">
+                    <label for="namaCustomer" class="form-label">Nama Customer:</label>
+                    <input type="text" name="namaCustomer" class="form-control" placeholder="Masukkan Nama Customer" required>
                 </div>
 
                 <!-- Treatment Section -->
@@ -95,17 +65,17 @@
                     <div class="treatment-row row">
                         <div class="col-md-4">
                             <label for="idTreatment" class="form-label">Treatment:</label>
-                            <select name="idTreatment[]" class="form-select" onchange="updateRowTotal(this)">
+                            <select name="idTreatment[]" class="form-select" onchange="updateRowTotal(this)" required>
                                 @foreach($treatment as $data)
                                 <option value="{{ $data->idTreatment }}" data-price="{{ $data->hargaTreatment }}">
-                                    {{ $data->namaTreatment }} | Rp. {{ number_format($data->hargaTreatment, 0, ',', '.') }}
+                                    {{ $data->namaTreatment }} | Rp {{ number_format($data->hargaTreatment, 0, ',', '.') }}
                                 </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label for="idKaryawan" class="form-label">Karyawan:</label>
-                            <select name="idKaryawan[]" class="form-select">
+                            <select name="idKaryawan[]" class="form-select" required>
                                 @foreach($karyawan as $data)
                                 <option value="{{ $data->idKaryawan }}">
                                     {{ $data->namaKaryawan }}
@@ -115,12 +85,12 @@
                         </div>
                         <div class="col-md-2">
                             <label for="qty" class="form-label">QTY:</label>
-                            <input type="number" name="qty[]" value="1" class="form-control" onchange="updateRowTotal(this)">
+                            <input type="number" name="qty[]" value="1" class="form-control" min="1" onchange="updateRowTotal(this)" required>
                         </div>
                         <div class="col-md-2">
                             <label for="subtotal" class="form-label">Subtotal:</label>
                             <div>
-                                <span class="row-total">0</span>
+                                <span class="row-total">Rp 0</span>
                                 <input type="hidden" name="subtotal[]" value="0">
                             </div>
                         </div>
@@ -130,17 +100,42 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-success" onclick="addTreatmentRow()">+ Tambah Treatment</button>
+                <button type="button" class="btn btn-success" onclick="addTreatmentRow()">+ Tambah Treatment</button><br><br>
+                
+                <!-- Metode Pembayaran -->
+                <div class="mb-3">
+                    <label for="metode" class="form-label">Metode Pembayaran:</label>
+                    <select name="metode" id="metode" class="form-select" required>
+                        <option value="cash">Cash</option>
+                        <option value="qris">QRIS</option>
+                        <option value="ovo">OVO</option>
+                        <option value="transfer">Transfer</option>
+                        <option value="gopay">GoPay</option>
+                        <option value="dana">DANA</option>
+                    </select>
+                </div>
+
 
                 <!-- Total -->
-                <div class="mb-3 mt-3">
+                <div class="mb-3">
                     <label for="total" class="form-label">Total:</label>
                     <div>
                         <span class="text-success fs-5" id="total-display">Rp 0</span>
                     </div>
-                    <input type="hidden" id="total-price" name="total" class="form-control" readonly>
+                    <input type="hidden" id="total-price" name="total" readonly>
                 </div>
 
+                <!-- Bayar -->
+                <div class="mb-3">
+                    <label for="bayar" class="form-label">Bayar:</label>
+                    <input type="text" id="bayar" name="bayar" class="form-control" placeholder="Masukkan jumlah bayar" required>
+                </div>
+
+                <!-- Kembali -->
+                <div class="mb-3">
+                    <label for="kembali" class="form-label">Kembali:</label>
+                    <input type="text" id="kembali" name="kembali" class="form-control" readonly>
+                </div>
 
                 <!-- Submit Button -->
                 <div class="text-center">
@@ -157,6 +152,23 @@
 </footer>
 
 <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    const bayarInput = document.getElementById('bayar');
+    const kembaliInput = document.getElementById('kembali');
+    const totalInput = document.getElementById('total-price');
+
+    // Hitung kembalian saat nilai pembayaran berubah
+    bayarInput.addEventListener('input', function () {
+        const bayar = parseFloat(bayarInput.value || 0);
+        const total = parseFloat(totalInput.value || 0);
+        const kembali = bayar - total;
+
+        kembaliInput.value = kembali >= 0 ? kembali : 0; // Tidak boleh negatif
+    });
+});
+
+
     // Fungsi untuk menambahkan baris treatment
     function addTreatmentRow() {
         const container = document.getElementById('treatment-container');

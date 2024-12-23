@@ -53,7 +53,10 @@ public function bacaTransaksi() {
             'transaksi.tanggal',
             'transaksi.namaCustomer',
             DB::raw('SUM(detailTransaksi.qty) as totalQty'),
-            'transaksi.total'
+            'transaksi.total',
+            'transaksi.metode',
+            'transaksi.bayar',
+            'transaksi.kembali'
         )
         ->groupBy('transaksi.idTransaksi', 'transaksi.tanggal', 'transaksi.namaCustomer', 'transaksi.total')
         ->get();

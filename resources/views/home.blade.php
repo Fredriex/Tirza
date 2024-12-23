@@ -66,57 +66,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-        <div class="container">
-            <a class="navbar-brand" href="#">Tirza Salon</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/treatment">Data Treatment</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/karyawan">Data Karyawan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/komisi">Komisi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/transaksi">Buat Transaksi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dataTransaksi">Data Transaksi</a>
-                    </li>
-
-                    <div class="dropdown">
-                        <a class="btn btn-warning dropdown-toggle"  data-bs-toggle="dropdown" >
-                            Keuangan
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/pemasukan">Pemasukan</a></li>
-                            <li><a class="dropdown-item" href="/pengeluaran">pengeluaran</a></li>
-                        </ul>
-                    </div>
-                </ul>
-                @if(isset($user))
-                <div class="user-info d-flex align-items-center">
-                    <p class="mb-0"><strong>{{ $user->name }}</strong> ({{ $user->role }})</p>
-                </div>
-                @endif
-                <form action="/logout" method="POST" class="d-inline ms-3">
-                    @csrf
-                    <button type="submit" class="btn btn-logout btn-sm nav-link text-white border-0 d-flex align-items-center">
-                        <i class="bi bi-box-arrow-right me-2"></i> Logout
-                    </button>
-                </form>
-            </div>
-        </div>
-    </nav>
+<x-navbar active="home" />
 
     <div class="container welcome-section">
         <h1>Selamat Datang di Tirza Salon</h1>
@@ -124,4 +74,4 @@
     </div>
 </body>
 
-</html>
+</html> 

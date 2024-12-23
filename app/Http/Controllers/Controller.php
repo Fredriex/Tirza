@@ -129,11 +129,19 @@ class Controller extends BaseController
         $idTransaksi = $request->input('idTransaksi');
         $tanggal = $request->input('tanggal');
         $namaCustomer = $request->input('namaCustomer');
+        $metode = $request->input('metode');
+        $bayar = $request->input('bayar');
         $total = $request->input('total');
+        $kembali = $request->input('kembali');
+
 
         DB::table('transaksi')->insert([
             'idTransaksi' => $idTransaksi,
             'tanggal' => $tanggal,
+            'namaCustomer' => $namaCustomer,
+            'metode' => $metode,
+            'bayar' => $bayar,
+            'kembali' => $kembali,
             'namaCustomer' => $namaCustomer,
             'total' => $total
         ]);

@@ -9,34 +9,8 @@
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-warning">
-  <div class="container">
-    <a class="navbar-brand" href="#">Tirza Salon</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/treatment">Data Treatment</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/karyawan">Data Karyawan</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/komisi">Komisi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/transaksi">Buat Transaksi</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<x-navbar active="dataTransaksi" />
+
 
 <!-- Table Section -->
 <div class="container mt-5">
@@ -54,6 +28,9 @@
                             <th>Tanggal</th>
                             <th>Qty</th>
                             <th>Total</th>
+                            <th>Metode</th>
+                            <th>Bayar</th>
+                            <th>Kembali</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -65,6 +42,9 @@
                             <td>{{$data->tanggal}}</td>
                             <td>{{$data->totalQty}}</td>
                             <td>Rp. {{number_format($data->total, 0, ',', '.')}}</td>
+                            <td>{{$data->metode}}</td>
+                            <td>Rp. {{number_format($data->bayar, 0, ',', '.')}}</td>
+                            <td>Rp. {{number_format($data->kembali, 0, ',', '.')}}</td>
                             <td>
                                 <button onclick="detail('{{$data->idTransaksi}}')" class="btn btn-info btn-sm">
                                     <i class="bi bi-eye"></i> Detail

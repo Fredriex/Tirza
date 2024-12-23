@@ -18,7 +18,7 @@ Class Pdf{
         $grandtot = DB::table('detailtransaksi')
         ->join('transaksi', 'detailtransaksi.idTransaksi', '=', 'transaksi.idTransaksi')
         ->where('detailTransaksi.idTransaksi', '=', $idTransaksi)
-        ->select('transaksi.total')->first();
+        ->select('transaksi.total', 'transaksi.metode', 'transaksi.bayar', 'transaksi.kembali')->first();
         return $grandtot;    
     }
 
