@@ -34,6 +34,7 @@ Route::middleware(['auth', RoleMiddleware::class])->group(function () {
     Route::get('/editkaryawan/{idKaryawan}', [Controller::class, 'editkaryawan'])->name('editkaryawan');
     Route::post('/changekaryawan', [Controller::class, 'changekaryawan'])->name('changekaryawan');
     Route::get('/resetkomisi', [Controller::class, 'resetkomisi'])->name('resetkomisi');
+    Route::get('/resetpemasukan', [Controller::class, 'resetpemasukan'])->name('resetpemasukan');
     //komisi
     Route::get('/komisi', [Controller::class, 'komisi'])->name('komisi');
     Route::get('/komisikaryawan/{idKaryawan}', [Controller::class, 'komisikaryawan'])->name('komisikaryawan');
@@ -44,6 +45,8 @@ Route::middleware(['auth', RoleMiddleware::class])->group(function () {
     //keuangan
     Route::get('/pemasukan', [Controller::class, 'pemasukan'])->name('pemasukan');
     Route::get('/pengeluaran', [Controller::class, 'pengeluaran'])->name('pengeluaran');
+    Route::get('/exportTransaksi', [Controller::class, 'exportTransaksi'])->name('exportTransaksi');
+
 
 });
 

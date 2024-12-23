@@ -14,7 +14,12 @@
 
 
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Laporan Pemasukan</h1>
+    <h1 class="text-center mb-4">Laporan Pemasukan <?php echo date('F'); echo " "; echo date('Y'); ?></h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <a href="/resetpemasukan" class="btn btn-danger"><i class="bi bi-arrow-clockwise"></i> Reset Pemasukan</a>
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead class="table-dark">
@@ -23,7 +28,7 @@
                     <th>Customer</th>
                     <th>Treatment</th>
                     <th>Tanggal</th>
-                    <th>Total</th>
+                    <th>Pemasukan Kotor</th>
                     <th>HPP</th>
                     <th>Komisi</th>
                     <th>Pemasukan Bersih</th>
@@ -37,8 +42,8 @@
                     <td>{{ $item->namaTreatment }}</td>
                     <td>{{ $item->tanggal }}</td>
                     <td>Rp.{{ number_format($item->subtotal, 0, ',', '.') }}</td>
-                    <td>Rp.{{ number_format($item->hpp, 0, ',', '.') }}</td>
-                    <td>Rp.{{ number_format($item->komisi, 0, ',', '.') }}</td>
+                    <td>-Rp.{{ number_format($item->hpp, 0, ',', '.') }}</td>
+                    <td>-Rp.{{ number_format($item->komisi, 0, ',', '.') }}</td>
                     <td>Rp.{{ number_format($item->pemasukanbersih, 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
@@ -46,7 +51,7 @@
         </table>
     </div>
     <div class="alert alert-info text-center">
-        <h4>Total Pemasukan: <strong>Rp.{{ number_format($totalpemasukan, 0, ',', '.') }}</strong></h4>
+        <h4>Total Pemasukan <?php echo date('F'); echo " "; echo date('Y'); ?> : <strong>Rp.{{ number_format($totalpemasukan, 0, ',', '.') }}</strong></h4>
     </div>
 </div>
 

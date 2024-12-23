@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\exportTransaksi;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-
+use Maatwebsite\Excel\Facades\Excel;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -276,9 +277,18 @@ class Controller extends BaseController
         return view('pemasukan', ["pemasukan" => $pemasukan , "totalpemasukan" => $totalpemasukan]);
     }
 
+    public function resetpemasukan(){
+        (new Pemasukan())->resetpemasukan();
+        return redirect()->route('pemasukan');
+    }
+
     public function pengeluaran()
     {
         return view('pengeluaran');
+    }
+
+    public function exportTransaksi(){
+        return Excel::download(new exportTransaksi, "Transaksi " . date('M-Y') . ".xlsx");
     }
 
 

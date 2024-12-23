@@ -25,4 +25,8 @@ public function totalpemasukan()
         ->value('total_pemasukan'); 
 }
 
+public function resetpemasukan(){
+    DB::table('pemasukan')->delete();
+}
+
 }
