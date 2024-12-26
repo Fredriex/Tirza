@@ -134,8 +134,7 @@ class Controller extends BaseController
         $bayar = $request->input('bayar');
         $total = $request->input('total');
         $kembali = $request->input('kembali');
-
-
+    
         DB::table('transaksi')->insert([
             'idTransaksi' => $idTransaksi,
             'tanggal' => $tanggal,
@@ -143,26 +142,25 @@ class Controller extends BaseController
             'metode' => $metode,
             'bayar' => $bayar,
             'kembali' => $kembali,
-            'namaCustomer' => $namaCustomer,
             'total' => $total
         ]);
-
+    
         DB::table('pemasukan')->insert([
             'idTransaksi' => $idTransaksi,
             'tanggal' => $tanggal,
             'namaCustomer' => $namaCustomer,
             'total' => $total
         ]);
-
+    
         $idTreatmentList = $request->input('idTreatment');
         $idKaryawanList = $request->input('idKaryawan');
         $qtyList = $request->input('qty');
         $subtotalList = $request->input('subtotal');
-
+    
         for ($i = 0; $i < count($idTreatmentList); $i++) {
             $subtotal = $subtotalList[$i];
             $komisi = $subtotal * 0.1;
-
+    
             DB::table('detailtransaksi')->insert([
                 'idTransaksi' => $idTransaksi,
                 'idTreatment' => $idTreatmentList[$i],
@@ -170,7 +168,7 @@ class Controller extends BaseController
                 'qty' => $qtyList[$i],
                 'subtotal' => $subtotal
             ]);
-
+    
             DB::table('detailgaji')->insert([
                 'idTransaksi' => $idTransaksi,
                 'idTreatment' => $idTreatmentList[$i],
@@ -178,17 +176,41 @@ class Controller extends BaseController
                 'qty' => $qtyList[$i],
                 'subtotal' => $subtotal
             ]);
-
+    
             DB::table('komisi')->insert([
                 'idTransaksi' => $idTransaksi,
                 'idKaryawan' => $idKaryawanList[$i],
                 'gajiKomisi' => $komisi,
                 'tanggal' => $tanggal
             ]);
+    
+            // Update or Insert into rekap_komisi
+            $formattedDate = date('Y-m-01', strtotime($tanggal));
+    
+            $existingRekap = DB::table('rekap_komisi')
+                ->where('idKaryawan', $idKaryawanList[$i])
+                ->where('tanggal', $formattedDate)
+                ->first();
+    
+            if ($existingRekap) {
+                DB::table('rekap_komisi')
+                    ->where('idKaryawan', $idKaryawanList[$i])
+                    ->where('tanggal', $formattedDate)
+                    ->update([
+                        'totalKomisi' => $existingRekap->totalKomisi + $komisi,
+                    ]);
+            } else {
+                DB::table('rekap_komisi')->insert([
+                    'idKaryawan' => $idKaryawanList[$i],
+                    'totalKomisi' => $komisi,
+                    'tanggal' => $formattedDate,
+                ]);
+            }
         }
-
+    
         return redirect('/dataTransaksi');
     }
+    
 
     public function dataTransaksi()
     {
@@ -197,10 +219,12 @@ class Controller extends BaseController
     }
 
     public function detail($idTransaksi)
-    {
-        $detail = (new DetailTransaksi())->detail($idTransaksi);
-        $grandTotal = (new DetailTransaksi())->grandtot($idTransaksi);
-        $customer = (new DetailTransaksi())->detailCustomer($idTransaksi);
+    {   
+
+        $x = new DetailTransaksi();
+        $detail = $x->detail($idTransaksi);
+        $grandTotal = $x->grandtot($idTransaksi);
+        $customer = $x->detailCustomer($idTransaksi);
 
         return view('detailtransaksi', [
             'detail' => $detail,

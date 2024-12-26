@@ -7,11 +7,20 @@
     <title>Pemasukan - Tirza Salon</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <style>
+        @media (max-width: 768px) {
+            .table-responsive table {
+                font-size: 0.85rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <x-navbar active="pemasukan" />
-
 
 <div class="container mt-5">
     <h1 class="text-center mb-4">Laporan Pemasukan <?php echo date('F'); echo " "; echo date('Y'); ?></h1>

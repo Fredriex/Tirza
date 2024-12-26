@@ -3,7 +3,7 @@ namespace App\Models;
 use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\table; 
 
-Class detailTransaksi{
+Class DetailTransaksi{
 
     public function detail($idTransaksi){
         $detail = DB::table('detailtransaksi')

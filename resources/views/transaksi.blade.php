@@ -26,12 +26,22 @@
         .form-control:invalid {
             border-color: red;
         }
+        @media (max-width: 768px) {
+            .card-header h4 {
+                font-size: 1.5rem;
+            }
+            .btn {
+                font-size: 0.9rem;
+            }
+            .form-label {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
 
 <x-navbar active="transaksi" />
-
 
 <div class="container mt-5">
     <div class="card shadow">
@@ -51,7 +61,7 @@
                 <!-- Tanggal -->
                 <div class="mb-3">
                     <label for="tanggal" class="form-label">Tanggal:</label>
-                    <input type="datetime-local" name="tanggal" class="form-control">
+                    <input type="datetime-local" name="tanggal" class="form-control" required>
                 </div>
 
                 <!-- Nama Customer -->
@@ -62,7 +72,7 @@
 
                 <!-- Treatment Section -->
                 <div id="treatment-container">
-                    <div class="treatment-row row">
+                    <div class="treatment-row row g-3">
                         <div class="col-md-4">
                             <label for="idTreatment" class="form-label">Treatment:</label>
                             <select name="idTreatment[]" class="form-select" onchange="updateRowTotal(this)" required>
@@ -100,8 +110,8 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-success" onclick="addTreatmentRow()">+ Tambah Treatment</button><br><br>
-                
+                <button type="button" class="btn btn-success w-100 mt-3" onclick="addTreatmentRow()">+ Tambah Treatment</button>
+
                 <!-- Metode Pembayaran -->
                 <div class="mb-3">
                     <label for="metode" class="form-label">Metode Pembayaran:</label>
@@ -115,7 +125,6 @@
                     </select>
                 </div>
 
-
                 <!-- Total -->
                 <div class="mb-3">
                     <label for="total" class="form-label">Total:</label>
@@ -128,7 +137,7 @@
                 <!-- Bayar -->
                 <div class="mb-3">
                     <label for="bayar" class="form-label">Bayar:</label>
-                    <input type="text" id="bayar" name="bayar" class="form-control" placeholder="Masukkan jumlah bayar" required>
+                    <input type="number" id="bayar" name="bayar" class="form-control" placeholder="Masukkan jumlah bayar" min="0" required>
                 </div>
 
                 <!-- Kembali -->
@@ -139,7 +148,7 @@
 
                 <!-- Submit Button -->
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary w-50">Simpan Transaksi</button>
+                    <button type="submit" class="btn btn-primary w-100">Simpan Transaksi</button>
                 </div>
             </form>
         </div>

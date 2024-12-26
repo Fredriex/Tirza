@@ -47,7 +47,7 @@ public function simpanDetailTransaksi($data) {
 
 public function bacaTransaksi() {
     $transaksi = DB::table('transaksi')
-        ->join('detailTransaksi', 'transaksi.idTransaksi', '=', 'detailTransaksi.idTransaksi')
+        ->join('detailtransaksi', 'transaksi.idTransaksi', '=', 'detailTransaksi.idTransaksi')
         ->select(
             'transaksi.idTransaksi',
             'transaksi.tanggal',

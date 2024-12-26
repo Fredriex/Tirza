@@ -15,11 +15,13 @@ class UserSeeder extends Seeder
     {
         // Buat satu user
         User::create([
-            'name' => 'Fredriex',
-            'email' => 'fredriexpramanaputra@gmail.com',
-            'password' => Hash::make('@Fpp345875();'), 
-            'role' => 'admin'
+            'name' => 'andi',
+            'email' => 'andi@gmail.com',
+            'password' => Hash::make('1234'), 
+            'role' => 'karyawan'
         ]);
+
+
     }
 }
 

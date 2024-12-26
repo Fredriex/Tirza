@@ -17,32 +17,34 @@ class RoleMiddleware
      * @return mixed
      */
     public function handle(Request $request, Closure $next, $role = null)
-    {
-        if (Auth::check()) {
-            $userRole = Auth::user()->role;
+{
+    if (Auth::check()) {
+        $userRole = Auth::user()->role;
 
-            // Admin bisa mengakses semua rute
-            if ($userRole === 'admin') {
-                return $next($request);
-            }
-
-            // Karyawan hanya bisa mengakses rute tertentu
-            if ($userRole === 'karyawan') {
-                $allowedRoutes = [
-                    'transaksi',
-                    'dataTransaksi',
-                    'savetransaksi',
-                    'detail',
-                    'pdf'
-                ];
-
-                // Cek apakah rute saat ini termasuk dalam daftar yang diizinkan
-                if (in_array($request->route()->getName(), $allowedRoutes)) {
-                    return $next($request);
-                }
-            }
+        // Admin bisa mengakses semua rute
+        if ($userRole === 'admin') {
+            return $next($request);
         }
 
-        return redirect('/')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
+        // Karyawan hanya bisa mengakses rute tertentu
+        if ($userRole === 'karyawan') {
+            $allowedRoutes = [
+                'transaksi',
+                'dataTransaksi',
+                'savetransaksi',
+                'detail',
+                'pdf'
+            ];
+
+            // Cek apakah rute saat ini termasuk dalam daftar yang diizinkan
+            if (in_array($request->route()->getName(), $allowedRoutes)) {
+                return $next($request);
+            }
+        }
     }
+
+    // Tambahkan pesan error ke session
+    return redirect('/')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
+}
+
 }

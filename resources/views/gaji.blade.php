@@ -21,6 +21,35 @@
         .table td {
             text-align: center;
         }
+        @media (max-width: 768px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+            .table thead {
+                display: none;
+            }
+            .table tr {
+                display: block;
+                margin-bottom: 1rem;
+                border: 1px solid #dee2e6;
+                border-radius: 8px;
+                padding: 10px;
+            }
+            .table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 0;
+                font-size: 14px;
+                border: none;
+            }
+            .table td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                flex-basis: 50%;
+                text-align: left;
+            }
+        }
     </style>
 </head>
 <body>
@@ -64,32 +93,34 @@
             <h5 class="mb-0">Rincian Gaji</h5>
         </div>
         <div class="card-body">
-            <table class="table table-bordered table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID Transaksi</th>
-                        <th>Tanggal</th>
-                        <th>Nama Customer</th>
-                        <th>Treatment</th>
-                        <th>Qty</th>
-                        <th>Subtotal</th>
-                        <th>Komisi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($gajikomisi as $data)
-                    <tr>
-                        <td>{{$data->idTransaksi}}</td>
-                        <td>{{$data->tanggal}}</td>
-                        <td>{{$data->namaCustomer}}</td>
-                        <td>{{$data->namaTreatment}}</td>
-                        <td>{{$data->qty}}</td>
-                        <td>Rp. {{ number_format($data->subtotal, 0, ',', '.') }}</td>
-                        <td>Rp. {{ number_format($data->komisi, 0, ',', '.') }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID Transaksi</th>
+                            <th>Tanggal</th>
+                            <th>Nama Customer</th>
+                            <th>Treatment</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
+                            <th>Komisi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($gajikomisi as $data)
+                        <tr>
+                            <td data-label="ID Transaksi">{{$data->idTransaksi}}</td>
+                            <td data-label="Tanggal">{{$data->tanggal}}</td>
+                            <td data-label="Nama Customer">{{$data->namaCustomer}}</td>
+                            <td data-label="Treatment">{{$data->namaTreatment}}</td>
+                            <td data-label="Qty">{{$data->qty}}</td>
+                            <td data-label="Subtotal">Rp. {{ number_format($data->subtotal, 0, ',', '.') }}</td>
+                            <td data-label="Komisi">Rp. {{ number_format($data->komisi, 0, ',', '.') }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

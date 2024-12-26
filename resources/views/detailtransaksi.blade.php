@@ -5,7 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Transaksi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        @media (max-width: 768px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+            .table thead {
+                display: none;
+            }
+            .table tr {
+                display: block;
+                margin-bottom: 1rem;
+                border: 1px solid #dee2e6;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 10px;
+            }
+            .table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 0;
+                font-size: 14px;
+                border: none;
+            }
+            .table td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                flex-basis: 50%;
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -49,32 +82,34 @@
             <h5 class="mb-0">Detail Treatment</h5>
         </div>
         <div class="card-body">
-            <table class="table table-striped table-hover table-bordered align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Nama Treatment</th>
-                        <th>Harga (Rp)</th>
-                        <th>Qty</th>
-                        <th>Handled By</th>
-                        <th>Subtotal (Rp)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($detail as $data)
-                    <tr>
-                        <td>{{$data->namaTreatment}}</td>
-                        <td>{{number_format($data->hargaTreatment, 0, ',', '.')}}</td>
-                        <td>{{$data->qty}}</td>
-                        <td>{{$data->namaKaryawan}}</td>
-                        <td>{{number_format($data->subtotal, 0, ',', '.')}}</td>
-                    </tr>
-                    @endforeach
-                    <tr class="fw-bold">
-                        <td colspan="4" class="text-end">Grand Total:</td>
-                        <td>{{number_format($grandtot->total, 0, ',', '.')}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nama Treatment</th>
+                            <th>Harga (Rp)</th>
+                            <th>Qty</th>
+                            <th>Handled By</th>
+                            <th>Subtotal (Rp)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($detail as $data)
+                        <tr>
+                            <td data-label="Nama Treatment">{{$data->namaTreatment}}</td>
+                            <td data-label="Harga">{{number_format($data->hargaTreatment, 0, ',', '.')}}</td>
+                            <td data-label="Qty">{{$data->qty}}</td>
+                            <td data-label="Handled By">{{$data->namaKaryawan}}</td>
+                            <td data-label="Subtotal">{{number_format($data->subtotal, 0, ',', '.')}}</td>
+                        </tr>
+                        @endforeach
+                        <tr class="fw-bold">
+                            <td colspan="4" class="text-end">Grand Total:</td>
+                            <td data-label="Grand Total">{{number_format($grandtot->total, 0, ',', '.')}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -83,9 +118,6 @@
 <footer class="bg-light text-center text-muted py-3 mt-5">
     <div>© 2024 Detail Transaksi App | All Rights Reserved</div>
 </footer>
-
-<!-- Include Bootstrap Icons -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 </body>
 </html>

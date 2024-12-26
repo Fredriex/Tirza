@@ -10,9 +10,8 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            return redirect('/'); // Redirect ke dashboard jika sudah login
+            view()->share('user', Auth::user());
         }
-
         return $next($request);
     }
 }
