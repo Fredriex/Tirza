@@ -6,14 +6,14 @@ use function Laravel\Prompts\table;
 Class Karyawan{
 
     public function bacaKaryawan(){
-        $karyawan = DB::table('karyawan')
+        $karyawan = DB::table('karyawan')->where('status', '=', 'aktif')
         ->get();
         return $karyawan;
     }
 
 
     public function bacaKaryawankomisi(){
-        $karyawan = DB::table('karyawan')
+        $karyawan = DB::table('karyawan')->where('status', '=', 'aktif')
         ->leftJoin('rekap_komisi', 'karyawan.idKaryawan', '=', 'rekap_komisi.idKaryawan')
         ->select('karyawan.idKaryawan', 
         'karyawan.namaKaryawan',
@@ -55,7 +55,7 @@ Class Karyawan{
     }
 
     public function deletekaryawan($idKaryawan){
-        DB::table('karyawan')->where('idKaryawan', '=', $idKaryawan)->delete();
+        DB::table('karyawan')->where('idKaryawan', '=', $idKaryawan)->update(['status' => "non-aktif"]);
     }
 
     public function resetkomisi(){

@@ -134,6 +134,9 @@ class Controller extends BaseController
         $bayar = $request->input('bayar');
         $total = $request->input('total');
         $kembali = $request->input('kembali');
+        $biayaTambahan = $request->input('biayaTambahan');
+        $catatan = $request->input('catatan');
+
     
         DB::table('transaksi')->insert([
             'idTransaksi' => $idTransaksi,
@@ -142,7 +145,9 @@ class Controller extends BaseController
             'metode' => $metode,
             'bayar' => $bayar,
             'kembali' => $kembali,
-            'total' => $total
+            'total' => $total,
+            'biayaTambahan' => $biayaTambahan,
+            'catatan' => $catatan
         ]);
     
         DB::table('pemasukan')->insert([

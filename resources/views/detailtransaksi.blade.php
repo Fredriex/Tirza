@@ -71,6 +71,7 @@
             <p><strong>No Transaksi:</strong> {{$customer->idTransaksi}}</p>
             <p><strong>Nama Customer:</strong> {{$customer->namaCustomer}}</p>
             <p><strong>Tanggal/Jam Transaksi:</strong> {{$customer->tanggal}}</p>
+            <p><strong>Catatan:</strong> {{$customer->catatan}}</p>
         </div>
     </div>
 </div>
@@ -103,6 +104,10 @@
                             <td data-label="Subtotal">{{number_format($data->subtotal, 0, ',', '.')}}</td>
                         </tr>
                         @endforeach
+                        <tr class="fw-bold">
+                            <td colspan="4" class="text-end">Biaya Tambahan:</td>
+                            <td data-label="biayaTambahan">{{number_format($grandtot->biayaTambahan, 0, ',', '.')}}</td>
+                        </tr>
                         <tr class="fw-bold">
                             <td colspan="4" class="text-end">Grand Total:</td>
                             <td data-label="Grand Total">{{number_format($grandtot->total, 0, ',', '.')}}</td>

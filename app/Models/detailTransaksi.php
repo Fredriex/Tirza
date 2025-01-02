@@ -18,7 +18,7 @@ Class DetailTransaksi{
         $grandtot = DB::table('detailtransaksi')
         ->join('transaksi', 'detailtransaksi.idTransaksi', '=', 'transaksi.idTransaksi')
         ->where('detailTransaksi.idTransaksi', '=', $idTransaksi)
-        ->select('transaksi.total')->first();
+        ->select('transaksi.total', 'transaksi.biayaTambahan')->first();
         return $grandtot;    
     }
 
@@ -28,7 +28,7 @@ Class DetailTransaksi{
         ->join('treatment', 'detailtransaksi.idTreatment', '=', 'treatment.idTreatment')
         ->join('karyawan', 'detailtransaksi.idKaryawan', '=', 'karyawan.idKaryawan')
         ->where('detailTransaksi.idTransaksi', '=', $idTransaksi)
-        ->select('transaksi.namaCustomer', 'transaksi.tanggal', 'karyawan.namaKaryawan','transaksi.idTransaksi')
+        ->select('transaksi.namaCustomer', 'transaksi.tanggal', 'karyawan.namaKaryawan','transaksi.idTransaksi', 'transaksi.catatan')
         ->first();
         return $detail;    
     }

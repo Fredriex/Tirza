@@ -125,6 +125,17 @@
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label for="biayaTambahan" class="form-label">Biaya Tambahan:</label>
+                    <input type="number" id="biayaTambahan" name="biayaTambahan" class="form-control" placeholder="Masukkan Tambahan" min="0" value="0">
+                </div>
+
+                
+                <div class="mb-3">
+                    <label for="catatan" class="form-label">Catatan:</label>
+                    <input type="text" id="catatan" name="catatan" class="form-control" placeholder="catatan">
+                </div>
+
                 <!-- Total -->
                 <div class="mb-3">
                     <label for="total" class="form-label">Total:</label>
@@ -247,18 +258,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fungsi untuk menghitung total keseluruhan
     function updateTotalPrice() {
-        const subtotals = document.querySelectorAll('input[name="subtotal[]"]');
-        let total = 0;
+    const subtotals = document.querySelectorAll('input[name="subtotal[]"]');
+    const biayaTambahanInput = document.getElementById('biayaTambahan'); // Ambil input biaya tambahan
+    let total = 0;
 
-        subtotals.forEach(subtotal => {
-            total += parseFloat(subtotal.value || 0);
-        });
+    // Hitung subtotal dari semua baris
+    subtotals.forEach(subtotal => {
+        total += parseFloat(subtotal.value || 0);
+    });
 
-        // Tampilkan total dalam format Rupiah
-        const totalInput = document.getElementById('total-price');
-        totalInput.value = total; // Tetap simpan angka asli di input
-        totalInput.previousElementSibling.textContent = formatRupiah(total); // Tampilkan Rupiah di elemen sebelum input
-    }
+    // Tambahkan biaya tambahan
+    const biayaTambahan = parseFloat(biayaTambahanInput.value || 0);
+    total += biayaTambahan;
+
+    // Tampilkan total dalam format Rupiah
+    const totalInput = document.getElementById('total-price');
+    totalInput.value = total; // Simpan angka asli di input
+    totalInput.previousElementSibling.textContent = formatRupiah(total); // Tampilkan dalam format Rupiah
+}
+
 
     // Fungsi untuk memformat angka ke dalam format Rupiah
     function formatRupiah(number) {
@@ -273,6 +291,11 @@ document.addEventListener('DOMContentLoaded', function () {
             updateRowTotal(treatmentSelect);
         });
     });
+
+    document.getElementById('biayaTambahan').addEventListener('input', function () {
+    updateTotalPrice();
+});
+
 </script>
 
 

@@ -15,10 +15,10 @@ class UserSeeder extends Seeder
     {
         // Buat satu user
         User::create([
-            'name' => 'andi',
-            'email' => 'andi@gmail.com',
+            'name' => 'tirza',
+            'email' => 'tirza@gmail.com',
             'password' => Hash::make('1234'), 
-            'role' => 'karyawan'
+            'role' => 'admin'
         ]);
 
 

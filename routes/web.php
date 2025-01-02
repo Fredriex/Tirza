@@ -53,3 +53,4 @@ Route::middleware(['auth', RoleMiddleware::class])->group(function () {
     Route::get('/pdf/{idTransaksi}', [Controller::class, 'pdf'])->name('pdf');
 });
 
+
