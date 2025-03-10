@@ -33,6 +33,9 @@
             <h2 class="fw-bold">Daftar Karyawan</h2>
         </div>
         <div class="col-12 col-md-6 text-md-end mt-2 mt-md-0">
+            <a href="/absensi" class="btn btn-primary me-2">
+                <i class="bi bi-card-checklist"></i> Absensi
+            </a>
             <a href="/addkaryawan" class="btn btn-success me-2">
                 <i class="bi bi-plus-circle"></i> Tambah Karyawan
             </a>
@@ -51,7 +54,8 @@
                     <th scope="col">NO Telepon</th>
                     <th scope="col">Alamat</th>
                     <th scope="col">Tanggal Masuk</th>
-                    <th scope="col">Gaji Bulanan</th>
+                    <th scope="col">Gaji Harian (Jika Masuk)</th>
+                    <th scope="col">Total Gaji Harian <?php echo date('F'); echo " "; echo date('Y'); ?> </th>
                     <th scope="col">Komisi Bulan <?php echo date('F'); echo " "; echo date('Y'); ?></th>
                     <th scope="col">Total Gaji <?php echo date('F'); echo " "; echo date('Y'); ?></th>
                     <th scope="col">Action</th>
@@ -65,9 +69,10 @@
                     <td data-label="NO Telepon">{{ $data->noTelp }}</td>
                     <td data-label="Alamat">{{ $data->alamat }}</td>
                     <td data-label="Tanggal Masuk">{{ $data->tanggalMasuk }}</td>
-                    <td data-label="Gaji Bulanan">Rp. {{ number_format($data->gajiBulanan, 0, ',', '.') }}</td>
+                    <td data-label="Gaji Harian">Rp. {{ number_format ($data-> gajiHarian, 0, ',', '.') }}</td>
+                    <td data-label="Total Gaji Harian">Rp. {{number_format ($data -> totalGajiHarian, 0, ',', '.') }}</td>
                     <td data-label="Komisi Bulanan">Rp. {{ number_format($data->totalKomisi, 0, ',', '.') }}</td>
-                    <td data-label="Total Gaji">Rp. {{ number_format($data->totalGajiBulanan, 0, ',', '.') }}</td>
+                    <td data-label="Total Gaji">Rp. {{number_format ($data -> totalGajiBulanan,0, ',', '.') }}</td>
                     <td data-label="Action">
                         <button onclick="detail('{{ $data->idKaryawan }}')" class="btn btn-primary btn-sm mb-1">
                             <i class="bi bi-pencil-square"></i> Edit

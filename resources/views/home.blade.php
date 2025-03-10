@@ -62,10 +62,7 @@
     </div>
 @endif
 
-    <div class="container welcome-section">
-        <h1>Selamat Datang di Tirza Salon</h1>
-        <p class="lead">Nikmati layanan terbaik kami untuk perawatan kecantikan Anda.</p>
-    </div>
+
 </body>
 
 </html> 

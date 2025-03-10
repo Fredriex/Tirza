@@ -83,7 +83,7 @@
         </div>
         <div class="card-body">
             <p><strong>Nama Karyawan:</strong> {{$gaji->namaKaryawan}}</p>
-            <p><strong>Gaji Bulanan:</strong> Rp. {{ number_format($gaji->gajiBulanan, 0, ',', '.') }}</p>
+            <p><strong>Gaji Harian:</strong> Rp. {{ number_format($gaji->gajiHarian, 0, ',', '.') }}</p>
         </div>
     </div>
 
@@ -132,8 +132,8 @@
     <div class="card-body">
         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between">
-                <span><strong>Gaji Bulanan:</strong></span>
-                <span>Rp. {{ number_format($gaji->gajiBulanan, 0, ',', '.') }}</span>
+                <span><strong>Total Gaji Harian:</strong></span>
+                <span>Rp. {{ number_format($gaji->gajiHarian, 0, ',', '.') }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span><strong>Total Komisi:</strong></span>

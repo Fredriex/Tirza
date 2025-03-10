@@ -8,7 +8,7 @@ class Gaji{
     public function detailKaryawan($idKaryawan){
         $data = DB::table('karyawan')
         ->where('karyawan.idKaryawan', '=', $idKaryawan)
-        ->select('karyawan.idKaryawan','karyawan.namaKaryawan', 'karyawan.gajiBulanan')
+        ->select('karyawan.idKaryawan','karyawan.namaKaryawan', 'karyawan.gajiHarian')
         ->first();
         return $data;
     }
@@ -40,9 +40,9 @@ class Gaji{
             ->where('karyawan.idKaryawan', '=', $idKaryawan)
             ->select(
                 DB::raw('COALESCE(SUM(rekap_komisi.totalKomisi), 0) as totalKomisi'),
-                DB::raw('COALESCE(SUM(rekap_komisi.totalKomisi), 0) + karyawan.gajiBulanan as totalGaji')
+                DB::raw('COALESCE(SUM(rekap_komisi.totalKomisi), 0) + karyawan.gajiHarian as totalGaji')
             )
-            ->groupBy('karyawan.idKaryawan', 'karyawan.gajiBulanan')
+            ->groupBy('karyawan.idKaryawan', 'karyawan.gajiHarian')
             ->first();
         return $gaji;
     }

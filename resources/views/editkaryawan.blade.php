@@ -72,8 +72,8 @@
 
                 <!-- Gaji -->
                 <div class="mb-3">
-                    <label for="gajiBulanan" class="form-label">Gaji Bulanan:</label>
-                    <input type="number" name="gajiBulanan" class="form-control" id="gajiBulanan" value="{{$getkaryawan->gajiBulanan}}" required>
+                    <label for="gajiBulanan" class="form-label">Gaji Harian:</label>
+                    <input type="number" name="gajiHarian" class="form-control" id="gajiHarian" value="{{$getkaryawan->gajiHarian}}" required>
                 </div>
 
                 <!-- Buttons -->

@@ -15,6 +15,7 @@ use App\Models\Komisi;
 use App\Models\Gaji;
 use App\Models\Pdf;
 use App\Models\Pemasukan;
+use App\Models\Absensi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -318,6 +319,26 @@ class Controller extends BaseController
 
     public function exportTransaksi(){
         return Excel::download(new exportTransaksi, "Transaksi " . date('M-Y') . ".xlsx");
+    }
+
+    public function absensi(){
+        $x = new Absensi();
+        $hasil = $x->bacaAbsensi();
+        $hasil2 = $x->bacaKaryawan();
+        return view('absensi', ["hasil" => $hasil, "karyawan" => $hasil2]);
+    }
+
+    public function addAbsensi(){
+        $x = new absensi();
+        $hasil = $x -> bacaKaryawan();
+        $hasil2 = $x -> bacastatus();
+        return view('addAbsensi', ["karyawan" => $hasil, "status" => $hasil2]);
+    }
+
+    public function saveAbsensi(Request $request){
+        $x = new Absensi();
+        $x -> saveAbsensi($request);
+        return redirect() -> route('absensi');
     }
 
 

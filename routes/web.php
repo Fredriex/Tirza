@@ -42,6 +42,10 @@ Route::middleware(['auth', RoleMiddleware::class])->group(function () {
     Route::get('/pemasukan', [Controller::class, 'pemasukan'])->name('pemasukan');
     Route::get('/pengeluaran', [Controller::class, 'pengeluaran'])->name('pengeluaran');
     Route::get('/exportTransaksi', [Controller::class, 'exportTransaksi'])->name('exportTransaksi');
+    //absensi
+    Route::get('/absensi', [Controller::class, 'absensi'])->name('absensi');
+    Route::get('/addAbsensi', [Controller::class, 'addAbsensi'])->name('addAbsensi');
+    Route::post('/saveAbsensi', [Controller::class, 'saveAbsensi'])->name('saveAbsensi');
 });
 
 // Rute untuk transaksi (dapat diakses oleh admin dan karyawan)

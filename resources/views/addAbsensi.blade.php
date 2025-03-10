@@ -40,7 +40,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-        <a class="navbar-brand text-dark" href="#">Tambah Karyawan</a>
+        <a class="navbar-brand text-dark" href="#">Absensi</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -57,34 +57,38 @@
 <div class="container mt-5">
     <div class="card shadow">
         <div class="card-header text-center">
-            <h4>Form Tambah Karyawan</h4>
+            <h4>Form Absensi</h4>
         </div>
         <div class="card-body">
-            <form action="savekaryawan" method="post">
+            <form action="saveAbsensi" method="post">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="mb-3">
-                    <label for="idKaryawan" class="form-label">ID Karyawan</label>
-                    <input type="text" name="idKaryawan" class="form-control" id="idKaryawan" placeholder="Masukkan ID Karyawan">
+                    <label for="idKaryawan" class="form-label">ID Absensi</label>
+                    <input type="text" name="idAbsen" class="form-control" id="idAbsen" value="<?php echo 'ABS'; echo date('ymdGis')?>" readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="namaKaryawan" class="form-label">Nama Karyawan</label>
-                    <input type="text" name="namaKaryawan" class="form-control" id="namaKaryawan" placeholder="Masukkan Nama Karyawan">
+                    <label for="namaKaryawan" class="form-label">Pilih Karyawan</label>
+                    <select name="idKaryawan" id="idKaryawan" class="form-control">
+                        @foreach($karyawan as $data)
+                        <option value="{{$data -> idKaryawan}}">{{$data -> namaKaryawan}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="noTelp" class="form-label">No Telepon</label>
-                    <input type="text" name="noTelp" class="form-control" id="noTelp" placeholder="Masukkan No Telepon">
+                    <label for="noTelp" class="form-label">Tanggal</label>
+                    <input type="date" name="tanggalmasuk" class="form-control" id="tanggal">
                 </div>
                 <div class="mb-3">
-                    <label for="alamat" class="form-label">Alamat</label>
-                    <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Masukkan Alamat">
+                    <label for="alamat" class="form-label">Jam</label>
+                    <input type="time" name="jam" class="form-control" id="alamat">
                 </div>
                 <div class="mb-3">
-                    <label for="tanggalMasuk" class="form-label">Tanggal Masuk</label>
-                    <input type="date" name="tanggalMasuk" class="form-control" id="tanggalMasuk">
-                </div>
-                <div class="mb-3">
-                    <label for="gajiBulanan" class="form-label">Gaji</label>
-                    <input type="number" name="gajiBulanan" class="form-control" id="gajiBulanan" placeholder="Masukkan Gaji Harian">
+                    <label for="kehadiran" class="form-label">Kehadiran</label>
+                    <select name="kehadiran" id="kehadiran" class="form-control">
+                       @foreach($status as $data)
+                        <option value="{{$data -> idStatus}}">{{$data -> kehadiran}}</option>
+                        @endforeach
+                    </select>                
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary text-white">Simpan</button>
